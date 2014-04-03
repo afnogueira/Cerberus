@@ -155,25 +155,42 @@
                         recordPref = false;
                     }
                 
+                    Boolean loadPref;
+                    if (request.getParameter("loadPref") != null
+                            && request.getParameter("loadPref").compareTo("Y") == 0) {
+                        loadPref = true;
+                    } else {
+                        loadPref = false;
+                    }
+                
                     Statement stmt = conn.createStatement();
                     Statement stmt33 = conn.createStatement();
+                    Statement stmt5 = conn.createStatement();
 
-                    IApplicationService myApplicationService = appContext.getBean(IApplicationService.class);
                     String SitdmossBugtrackingURL;
                     String SitdmossBugtrackingURL_tc;
                     SitdmossBugtrackingURL_tc = "";
 
-                    Statement stmt5 = conn.createStatement();
+                    IApplicationService myApplicationService = appContext.getBean(IApplicationService.class);
+                    if (recordPref) {
 
-                    String insertURL = "UPDATE user SET ReportingFavorite = '"
-                            + request.getRequestURI() + "' where login = '"
+                        String insertURL = "UPDATE user SET ReportingFavorite = '"
+                            + request.getQueryString()+ "' where login = '"
                             + request.getUserPrincipal().getName()
                             + "'";
-                    if (recordPref == true) {
                         stmt5.execute(insertURL);
+                        %><!-- <%=insertURL%> --><%
+                    } else if(loadPref) {
+                        String selectURL = "select ReportingFavorite from user where login = '"
+                            + request.getUserPrincipal().getName()
+                            + "'";
+                        ResultSet rs_URL = stmt5.executeQuery(selectURL);
+                        if (rs_URL.first()) {
+                            %><script>
+                            location.href="./ReportingExecution.jsp?<%=rs_URL.getString(1)%>";
+                              </script><%
+                        }
                     }
-
-
             %>
             <!--
                 tcclauses : <%=tcclauses%>

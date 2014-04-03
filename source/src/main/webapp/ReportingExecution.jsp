@@ -450,13 +450,10 @@
                                                 <td class="wob">
                                                     <input id="button" type="submit" name="Apply" value="Apply">
                                                 </td>
-                                                <%if (!apply) {
-                                                %>
+                                                
                                                 <td class="wob">
-                                                    <input id="button" type="button" name="defaultFilter" value="Select My Default Filters" onclick="loadReporting('<%=reportingFavorite%>')">           
-                                                </td><% }
-
-                                                %>
+                                                    <input id="defaultFilter" <%if(!apply){%>disabled<%}%> type="button" name="defaultFilter" value="Select My Default Filters" onclick="loadReporting('<%=reportingFavorite%>')">           
+                                                </td>
                                                 <td class="wob">
                                                     <input id="button" type="button" value="Set As My Default Filter" onclick="saveFilters()">
                                                 </td>
@@ -514,6 +511,7 @@
                 // prepare all forms for ajax submission
                 $('#Apply').on('submit', function(e) {
                     $('#displayResult').html('<img src="./images/loading.gif"> loading...');
+                    $('#defaultFilter').removeAttr('disabled');
                     e.preventDefault(); // <-- important
                     $(this).ajaxSubmit({
                         target: '#displayResult'
@@ -528,12 +526,12 @@
                     }
                 %>
 
-                function saveFilters() {
-                    $('#Apply').action = $('#Apply').action+"?Apply=Apply&RecordPref=Y";
-                    $('#Apply').submit();
-                }
-
             });
+
+            function saveFilters() {
+                $('#Apply').action = $('#Apply').action+"?Apply=Apply&RecordPref=Y";
+                $('#Apply').submit();
+            }
         </script>
         <br><% out.print(display_footer(DatePageStart));%>
     </body>
