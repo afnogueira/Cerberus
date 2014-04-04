@@ -129,7 +129,12 @@ public class GetTestCase extends HttpServlet {
                     property.put("length", prop.getLength());
                     property.put("rowLimit", prop.getRowLimit());
                     property.put("nature", prop.getNature());
+                    
                     List<String> countriesSelected = testCaseDAO.findCountryByProperty(prop);
+                    
+                    property.put("countriesSelected", countriesSelected);
+
+                    /*
                     for (TestCaseCountry tcc : tcInfo.getTestCaseCountry()) {
                         if (countriesSelected.contains(tcc.getCountry())) {
                             property.put(tcc.getCountry(), true);
@@ -137,6 +142,7 @@ public class GetTestCase extends HttpServlet {
                             property.put(tcc.getCountry(), false);
                         }
                     }
+                    */
                     propertyList.put(property);
                 }
                 jsonObject.put("properties", propertyList);

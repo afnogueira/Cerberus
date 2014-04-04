@@ -44,4 +44,6 @@ public interface ITestCaseCountryPropertiesDAO {
     void insertTestCaseCountryProperties(TestCaseCountryProperties testCaseCountryProperties) throws CerberusException;
 
     void updateTestCaseCountryProperties(TestCaseCountryProperties testCaseCountryProperties) throws CerberusException;
+
+    void updateTestCasePropertiesColumn(String test, String testCase, String property, String columnName, String value) throws CerberusException;
 }

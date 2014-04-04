@@ -93,4 +93,9 @@ public class TestCaseCountryPropertiesService implements ITestCaseCountryPropert
         testCaseCountryPropertiesDAO.updateTestCaseCountryProperties(testCaseCountryProperties);
     }
    
+    @Override
+    public void updateTestCasePropertiesColumn(String test, String testCase, String property, String columnName, String value) throws CerberusException {
+        testCaseCountryPropertiesDAO.updateTestCasePropertiesColumn(test, testCase, property, columnName, value);
+    }
+   
 }

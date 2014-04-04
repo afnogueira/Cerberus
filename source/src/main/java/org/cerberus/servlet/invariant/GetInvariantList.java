@@ -34,6 +34,7 @@ import org.cerberus.log.MyLogger;
 import org.cerberus.service.IInvariantService;
 import org.cerberus.service.impl.InvariantService;
 import org.cerberus.util.ParameterParserUtil;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.owasp.html.PolicyFactory;
@@ -55,13 +56,28 @@ public class GetInvariantList extends HttpServlet {
         String id = policy.sanitize(request.getParameter("idName"));
         String idName = ParameterParserUtil.parseStringParam(id, "");
 
+        String type = policy.sanitize(request.getParameter("type"));
+        String typeName = ParameterParserUtil.parseStringParam(type, "");
+
         ApplicationContext appContext = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
         IInvariantService invariantService = appContext.getBean(InvariantService.class);
         try {
             JSONObject jsonResponse = new JSONObject();
+            JSONArray array = new JSONArray();
             try {
                 for (Invariant myInvariant : invariantService.findListOfInvariantById(idName)) {
-                    jsonResponse.put(myInvariant.getValue(), myInvariant.getValue());
+                    if(typeName != null && "editable".equals(typeName)) {
+                        JSONObject  jSONObject = new JSONObject();
+                        
+                        jSONObject.put("value", myInvariant.getValue());
+                        jSONObject.put("text", myInvariant.getValue());
+                        array.put(jSONObject);
+                    } else {
+                        jsonResponse.put(myInvariant.getValue(), myInvariant.getValue());
+                    }
+                }
+                if(typeName != null && "editable".equals(typeName)) {
+                    jsonResponse.put("source",array);
                 }
             } catch (CerberusException ex) {
                 response.setContentType("text/html");

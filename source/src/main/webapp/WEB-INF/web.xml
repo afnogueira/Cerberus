@@ -23,6 +23,11 @@
         <servlet-class>org.cerberus.servlet.testCase.GetTestCaseList</servlet-class>
     </servlet>
     <servlet>
+        <display-name>UpdatePropertyForTestCase</display-name>
+        <servlet-name>UpdatePropertyForTestCase</servlet-name>
+        <servlet-class>org.cerberus.servlet.testCase.UpdatePropertyForTestCase</servlet-class>
+    </servlet>
+    <servlet>
         <display-name>TestcaseInformation</display-name>
         <servlet-name>GetTestCase</servlet-name>
         <servlet-class>org.cerberus.servlet.testCase.GetTestCase</servlet-class>
@@ -175,6 +180,10 @@
     <servlet>
         <servlet-name>GetInvariantList</servlet-name>
         <servlet-class>org.cerberus.servlet.invariant.GetInvariantList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FindInvariantListByIdname</servlet-name>
+        <servlet-class>org.cerberus.servlet.invariant.FindInvariantListByIdname</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GetApplication</servlet-name>
@@ -521,6 +530,10 @@
         <url-pattern>/GetTestCaseList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdatePropertyForTestCase</servlet-name>
+        <url-pattern>/UpdatePropertyForTestCase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>GetTestCase</servlet-name>
         <url-pattern>/GetTestCase</url-pattern>
     </servlet-mapping>
@@ -531,6 +544,10 @@
     <servlet-mapping>
         <servlet-name>GetInvariantList</servlet-name>
         <url-pattern>/GetInvariantList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FindInvariantListByIdname</servlet-name>
+        <url-pattern>/FindInvariantListByIdname</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetApplication</servlet-name>
@@ -786,6 +803,7 @@
             <web-resource-name>servlet</web-resource-name>
             <description>servlet</description>
             <url-pattern>/GetTestCaseList</url-pattern>
+            <url-pattern>/UpdatePropertyForTestCase</url-pattern>
             <url-pattern>/GetTestCase</url-pattern>
             <url-pattern>/TestcaseList</url-pattern>
             <url-pattern>/ExportListTestCase</url-pattern>
@@ -1007,6 +1025,7 @@
             <url-pattern>/SaveManualExecutionPicture</url-pattern>
             <url-pattern>/DocumentationField</url-pattern>
             <url-pattern>/GetInvariantList</url-pattern>
+            <url-pattern>/FindInvariantListByIdname</url-pattern>
             <url-pattern>/importXML</url-pattern>
             <url-pattern>/importFile</url-pattern>
             <url-pattern>/NewRelease</url-pattern>

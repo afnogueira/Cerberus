@@ -437,4 +437,50 @@ public class TestCaseCountryPropertiesDAO implements ITestCaseCountryPropertiesD
         }
     }
                 
+    @Override
+    public void updateTestCasePropertiesColumn(String test, String testCase, String property, String columnName, String value) throws CerberusException {
+        boolean throwExcep = false;
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE testcasecountryproperties SET `");
+        query.append(columnName);
+        query.append("` = ?" );
+        query.append(" WHERE Test = ? AND TestCase = ? AND Property = ? ");
+
+        Connection connection = this.databaseSpring.connect();
+        try {
+            PreparedStatement preStat = connection.prepareStatement(query.toString());
+            try {
+                if("RowLimit".equals(columnName) || "Length".equals(columnName)) {
+                    preStat.setInt(1, Integer.valueOf(value));
+                } else {
+                    preStat.setString(1, value);
+                }
+                preStat.setString(2, test);
+                preStat.setString(3, testCase);
+                preStat.setString(4, property);                
+
+                preStat.executeUpdate();
+                throwExcep = false;
+                
+                
+            } catch (SQLException exception) {
+                MyLogger.log(TestCaseStepDAO.class.getName(), Level.ERROR, exception.toString());
+            } finally {
+                preStat.close();
+            }
+        } catch (SQLException exception) {
+            MyLogger.log(TestCaseStepDAO.class.getName(), Level.ERROR, exception.toString());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                MyLogger.log(TestCaseStepDAO.class.getName(), Level.WARN, e.toString());
+            }
+        }
+        if (throwExcep) {
+            throw new CerberusException(new MessageGeneral(MessageGeneralEnum.CANNOT_UPDATE_TABLE));
+        }
+    }
 }

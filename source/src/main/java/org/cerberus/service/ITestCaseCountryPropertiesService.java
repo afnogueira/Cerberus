@@ -45,4 +45,6 @@ public interface ITestCaseCountryPropertiesService {
 
     boolean insertListTestCaseCountryProperties(List<TestCaseCountryProperties> testCaseCountryPropertiesList);
 
+    void updateTestCasePropertiesColumn(String test, String testCase, String property, String columnName, String value) throws CerberusException;
+
 }
