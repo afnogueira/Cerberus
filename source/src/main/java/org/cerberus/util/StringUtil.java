@@ -129,6 +129,12 @@ public final class StringUtil {
      * replacement
      */
     public static String replaceAllProperties(String str, String formula, String replacement) {
+        //replaceAll uses regex, therefore the syntax of the subdata entries ENTRY(SUBDATA) will be handled as part of the regex expression,
+        //namely the characters '(' and ')'. As a consequence we need to escape those characteres and ensure that the replaceAll method
+        //will consider the correct property name.
+        if(formula.contains("(") || formula.contains(")")){ //Its used becuse of the replacement of subdataentries'values. e.g., Person(Name)
+            formula = Pattern.quote(formula);
+        }
         if (replacement != null) {
             return str.replaceAll(formula, replacement);
         }
@@ -151,7 +157,7 @@ public final class StringUtil {
         if (str == null) {
             return properties;
         }
-
+        
         Matcher propertyMatcher = PROPERTY_VARIABLE_PATTERN.matcher(str);
         while (propertyMatcher.find()) {
             String rawProperty = propertyMatcher.group();
